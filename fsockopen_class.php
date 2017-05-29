@@ -3,7 +3,7 @@
  * fsockopen
  * 是 socket 套接字链接的封装函数
  * @author http://weibo.com/yakeing
- * @version 1.1
+ * @version 1.2
  */
 class fsockopen{
 	private $stream = true; //阻塞模式
@@ -107,11 +107,15 @@ class fsockopen{
 				case 'png':
 					$content_type = "image/png";
 				break;
-				default:
+				case 'jpg':
+				case 'jpeg':
 					$content_type = "image/jpg";
+				break;
+				default:
+					$content_type = "application/octet-stream";
 			}
 			$content_file = join('', file($file_array[$i]));
-			$data.= "\r\nContent-Disposition: form-data; name=\"image".($i+1)."\"; filename=\"".$file_array[$i]."\"";
+			$data.= "\r\nContent-Disposition: form-data; name=\"file".($i+1)."\"; filename=\"".$file_array[$i]."\"";
 			$data.= "\r\nContent-Type: ".$content_type;
 			$data.= "\r\n\r\n".$content_file."\r\n--".$boundary;
 		}
