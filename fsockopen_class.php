@@ -3,7 +3,7 @@
  * fsockopen
  * 是 socket 套接字链接的封装函数
  * @author http://weibo.com/yakeing
- * @version 1.0
+ * @version 1.1
  */
 class fsockopen{
 	private $stream = true; //阻塞模式
@@ -33,7 +33,6 @@ class fsockopen{
 		}
 	} //END ERR
 
-
 	//初始化 $timeout=时长, $xport=协议, $stream =阻塞模式
 	public function init($timeout='', $xport='', $stream = ''){
 		if(!empty($xport)){
@@ -50,7 +49,6 @@ class fsockopen{
 			$this->timeout = $timeout;
 		}
 	} //END init
-
 
 	//建立新通道连接
 	private function NewChannel($url){
@@ -94,12 +92,9 @@ class fsockopen{
 		return array($fp, $path.$query, $purl);
 	} //END NewChannel
 
-
 	//发送 POST 文件
 	public function POST_FILE($Url, $File, $Referer='', $Cookie=''){
 		$file_array = is_array($File) ? $File : array($File);
-
-		//$content_type = "text/plain";
 		srand((double)microtime()*1000000);
 		$boundary = "--------------------------".substr(md5(rand(0,32000)),0,10);
 		$data = "--".$boundary;
@@ -155,7 +150,6 @@ class fsockopen{
 		return $this->fwrite_out($fp, $header.$Content);
 	} //END POST
 
-
 	//GET 方式
 	public function GET($Url, $Referer='', $Cookie=''){
 		list($fp, $path, $purl) = $this->NewChannel($Url);
@@ -181,7 +175,6 @@ class fsockopen{
 		return $this->fwrite_out($fp, $header);
 	} //END GET
 
-
 	//处理 Chunked 分块字段 Transfer-Encoding:chunked
 	private function DecodeChunked($Body){
 		$ret = '';
@@ -197,20 +190,14 @@ class fsockopen{
 		return $ret;
 	} //END DecodeChunked
 
-
 	//获取数据包
 	private function fwrite_out($fp, $data){
 		$ret='';
-		echo $data;
 		fwrite($fp, $data);
 		while (!feof($fp)){
 			$ret .= fgets($fp, 4096);
 		}
 		fclose($fp);
-		echo "\n ========== \n".$ret."\n";
-		//$ret_length = strpos($ret, "\r\n\r\n");
-		//$RetHeader = substr($ret, 0, $ret_length);
-		//$RetBody = substr($ret, $ret_length+4);
 		list($RetHeader, $RetBody) = explode("\r\n\r\n", $ret, 2);
 		if(self::$OnContinue && preg_match('/^HTTP\/1\.[1|0]\s100\sContinue/i', $RetHeader)){ //处理 HTTP/1.1 100 Continue 数据
 			list($RetHeader, $RetBody) = explode("\r\n\r\n", $RetBody, 2);
