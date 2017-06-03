@@ -11,7 +11,7 @@ Author [yakeing](http://weibo.com/yakeing)
 
 ### 初始化参数
 -----
-- [x]示例：
+- [x] 示例：
 ```php
     $fs = new fsockopen();
     $ret = $fs->init(
@@ -23,7 +23,7 @@ Author [yakeing](http://weibo.com/yakeing)
 
 ### GET 获取网络资源
 -----
-- [x]示例：
+- [x] 示例：
 ```php
     $ret = $fs->GET(
         $Url , //目标地址
@@ -35,7 +35,7 @@ Author [yakeing](http://weibo.com/yakeing)
 
 ### POST 提交表单
 -----
-- [x]示例：
+- [x] 示例：
 ```php
     $ret = $fs->POST(
         $Url , //目标地址
@@ -48,14 +48,13 @@ Author [yakeing](http://weibo.com/yakeing)
 
 ### POST 发送文件
 -----
-- [x]示例：
+- [x] 示例：
 ```php
     $ret = $fs->POST_FILE(
         $Url , //目标地址
         $File, //文件/图片地址 ['01.jpg','02.jpg',...]
         $Referer , //伪造来源地址(可选)
         $Cookie, //本地Cookie(可选)
-        $ContentType //提交方式(可选)
     );
 ```
 
